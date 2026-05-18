@@ -2,10 +2,10 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 import {
   LayoutDashboard, FileText, PlusCircle, LogOut, Bell, ChevronRight
 } from 'lucide-react'
@@ -27,6 +27,61 @@ export function Sidebar({ profile, unreadCount = 0 }: SidebarProps) {
   const pathname = usePathname()
   const router = useRouter()
   const supabase = createClient()
+  const [count, setCount] = useState(unreadCount)
+
+  useEffect(() => {
+    setCount(unreadCount)
+  }, [unreadCount])
+
+  // ── Realtime: atualiza badge e mostra toast ao receber notificação nova ──
+  useEffect(() => {
+    const channel = supabase
+      .channel(`notifications:${profile.id}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'notifications',
+          filter: `user_id=eq.${profile.id}`,
+        },
+        (payload) => {
+          setCount(prev => prev + 1)
+          const n = payload.new as { title: string; message: string; order_id?: string }
+          toast(n.title, {
+            description: n.message,
+            duration: 6000,
+            action: n.order_id
+              ? {
+                  label: 'Ver pedido',
+                  onClick: () => router.push(`/dashboard/pedidos/${n.order_id}`),
+                }
+              : undefined,
+          })
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'notifications',
+          filter: `user_id=eq.${profile.id}`,
+        },
+        async () => {
+          // Recalcula quando alguma é marcada como lida
+          const { count: fresh } = await supabase
+            .from('notifications')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', profile.id)
+            .eq('read', false)
+          setCount(fresh ?? 0)
+        }
+      )
+      .subscribe()
+
+    return () => { supabase.removeChannel(channel) }
+  }, [profile.id])
 
   async function handleLogout() {
     await supabase.auth.signOut()
@@ -86,16 +141,19 @@ export function Sidebar({ profile, unreadCount = 0 }: SidebarProps) {
           )}>
             <div className="relative">
               <Bell className="w-[15px] h-[15px] shrink-0" />
-              {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full text-[8px] font-bold flex items-center justify-center text-white leading-none" style={{ background: '#0096c7' }}>
-                  {unreadCount > 9 ? '9+' : unreadCount}
+              {count > 0 && (
+                <span
+                  className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full text-[8px] font-bold flex items-center justify-center text-white leading-none"
+                  style={{ background: '#0096c7' }}
+                >
+                  {count > 9 ? '9+' : count}
                 </span>
               )}
             </div>
             <span className="flex-1">Notificações</span>
-            {unreadCount > 0 && (
+            {count > 0 && (
               <span className="text-[10px] px-1.5 py-0.5 rounded-full" style={{ background: 'rgb(0 180 216 / 0.12)', color: '#48cae4' }}>
-                {unreadCount}
+                {count}
               </span>
             )}
           </div>

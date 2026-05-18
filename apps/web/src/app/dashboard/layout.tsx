@@ -40,7 +40,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
       {/* Mobile bottom nav */}
       <div className="md:hidden">
-        <MobileNav unreadCount={unreadCount ?? 0} />
+        <MobileNav unreadCount={unreadCount ?? 0} userId={user.id} />
       </div>
     </div>
   )
