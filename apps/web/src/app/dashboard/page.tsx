@@ -131,10 +131,8 @@ export default async function DashboardPage() {
             Pedidos Recentes
           </h2>
           <Link href="/dashboard/pedidos"
-            className="text-xs flex items-center gap-1 transition-colors"
-            style={{ color: '#00b4d8', opacity: 0.6 }}
-            onMouseOver={e => (e.currentTarget.style.opacity = '1')}
-            onMouseOut={e => (e.currentTarget.style.opacity = '0.6')}
+            className="text-xs flex items-center gap-1 transition-opacity opacity-50 hover:opacity-90"
+            style={{ color: '#00b4d8' }}
           >
             Ver todos <ArrowUpRight className="w-3 h-3" />
           </Link>
