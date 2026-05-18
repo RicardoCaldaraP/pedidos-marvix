@@ -182,7 +182,8 @@ export function OrderComments({ orderId, currentUserId, currentProfile }: OrderC
           <button
             type="submit"
             disabled={!text.trim() || submitting}
-            className="absolute right-2 bottom-2 w-7 h-7 rounded-lg bg-blue-600/80 hover:bg-blue-600 disabled:opacity-30 transition-all flex items-center justify-center"
+            className="absolute right-2 bottom-2 w-7 h-7 rounded-lg disabled:opacity-30 transition-all flex items-center justify-center"
+            style={{ background: 'linear-gradient(135deg, #0077b6, #00b4d8)' }}
           >
             {submitting ? (
               <span className="w-3 h-3 border border-white/30 border-t-white rounded-full animate-spin" />

@@ -73,7 +73,7 @@ export default async function OrdersPage({
         <Link href="/dashboard/novo-pedido">
           <button
             className="flex items-center gap-2 h-9 px-4 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[0.98]"
-            style={{ background: 'linear-gradient(135deg, #1d4ed8, #2563eb)' }}
+            style={{ background: 'linear-gradient(135deg, #0077b6, #00b4d8)' }}
           >
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">Novo Pedido</span>
@@ -103,7 +103,7 @@ export default async function OrdersPage({
               href={`/dashboard/pedidos${opt.value !== 'all' ? `?status=${opt.value}` : ''}`}
               className={`shrink-0 px-3 h-9 flex items-center rounded-xl text-xs font-medium transition-all ${
                 activeFilter === opt.value
-                  ? 'bg-blue-500/12 text-blue-400 border border-blue-500/20'
+                  ? 'border text-[#48cae4]'
                   : 'text-white/30 hover:text-white/60 hover:bg-white/4 border border-transparent'
               }`}
             >
@@ -122,7 +122,7 @@ export default async function OrdersPage({
           <h3 className="text-sm font-semibold text-white/40 mb-1">Nenhum pedido encontrado</h3>
           <p className="text-xs text-white/20 mb-5">Tente mudar os filtros ou criar um novo pedido.</p>
           <Link href="/dashboard/novo-pedido">
-            <button className="h-8 px-4 rounded-lg text-xs font-semibold text-white bg-blue-600/80 hover:bg-blue-600 transition-colors">
+            <button className="h-8 px-4 rounded-lg text-xs font-semibold text-white transition-colors" style={{ background: 'linear-gradient(135deg, #0077b6, #00b4d8)' }}>
               + Criar Pedido
             </button>
           </Link>

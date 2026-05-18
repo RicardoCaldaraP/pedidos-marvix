@@ -37,16 +37,23 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* ─── HERO HEADER ─── */}
-      <div className="relative overflow-hidden rounded-2xl border border-white/6 bg-gradient-to-br from-blue-950/30 via-white/2 to-transparent p-8">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="relative overflow-hidden rounded-2xl p-8" style={{ border: '1px solid rgb(0 180 216 / 0.12)', background: 'linear-gradient(135deg, rgb(0 40 80 / 0.35) 0%, rgb(0 20 40 / 0.15) 60%, transparent 100%)' }}>
+        {/* Underwater light orb */}
+        <div className="absolute top-0 right-0 w-72 h-72 rounded-full blur-3xl pointer-events-none" style={{ background: 'radial-gradient(ellipse, rgb(0 180 216 / 0.08) 0%, transparent 70%)' }} />
+        {/* Wave decoration bottom */}
+        <div className="absolute bottom-0 left-0 right-0 opacity-[0.07]">
+          <svg viewBox="0 0 800 30" className="w-full" fill="none" preserveAspectRatio="none">
+            <path d="M0 15 Q100 5 200 15 Q300 25 400 15 Q500 5 600 15 Q700 25 800 15 L800 30 L0 30Z" fill="#48cae4"/>
+          </svg>
+        </div>
         <div className="relative">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-xs font-semibold text-blue-400/70 uppercase tracking-[0.15em] mb-2">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] mb-2" style={{ color: '#48cae4', opacity: 0.6 }}>
                 {new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })}
               </p>
               <h1 className="text-3xl font-bold text-white mb-1">
-                Olá, {profile?.full_name?.split(' ')[0]} 👋
+                Olá, {profile?.full_name?.split(' ')[0]} 🎣
               </h1>
               <p className="text-white/40 text-sm">
                 {isAdmin
@@ -57,7 +64,7 @@ export default async function DashboardPage() {
             </div>
             <Link href="/dashboard/novo-pedido">
               <button className="flex items-center gap-2 h-9 px-4 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[0.98]"
-                style={{ background: 'linear-gradient(135deg, #1d4ed8, #2563eb)' }}>
+                style={{ background: 'linear-gradient(135deg, #0077b6, #00b4d8)' }}>
                 <Plus className="w-4 h-4" />
                 Novo Pedido
               </button>
@@ -69,14 +76,18 @@ export default async function DashboardPage() {
       {/* ─── STATS GRID ─── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {[
-          { label: 'Total', value: stats.total, icon: Layers, color: '#60a5fa', bg: 'from-blue-500/8' },
-          { label: 'Em Andamento', value: stats.inProgress, icon: Clock, color: '#fbbf24', bg: 'from-amber-500/8' },
-          { label: 'Aguardando', value: stats.awaiting, icon: TrendingUp, color: '#c084fc', bg: 'from-purple-500/8' },
-          { label: 'Finalizados', value: stats.completed, icon: CheckCircle, color: '#34d399', bg: 'from-emerald-500/8' },
+          { label: 'Total', value: stats.total, icon: Layers, color: '#00b4d8', glow: 'rgb(0 180 216 / 0.12)' },
+          { label: 'Em Andamento', value: stats.inProgress, icon: Clock, color: '#f4a261', glow: 'rgb(244 162 97 / 0.12)' },
+          { label: 'Aguardando', value: stats.awaiting, icon: TrendingUp, color: '#c084fc', glow: 'rgb(192 132 252 / 0.12)' },
+          { label: 'Finalizados', value: stats.completed, icon: CheckCircle, color: '#06d6a0', glow: 'rgb(6 214 160 / 0.12)' },
         ].map((s, i) => (
           <div key={s.label}
-            className={`relative overflow-hidden rounded-2xl border border-white/6 bg-gradient-to-br ${s.bg} to-transparent p-5 animate-fade-up`}
-            style={{ animationDelay: `${i * 0.07}s` }}
+            className="relative overflow-hidden rounded-2xl p-5 animate-fade-up"
+            style={{
+              animationDelay: `${i * 0.07}s`,
+              background: `radial-gradient(ellipse at top left, ${s.glow} 0%, transparent 60%)`,
+              border: `1px solid ${s.color}18`,
+            }}
           >
             <div className="flex items-start justify-between mb-4">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center"
@@ -93,10 +104,10 @@ export default async function DashboardPage() {
 
       {/* ─── URGENT BANNER ─── */}
       {urgent.length > 0 && (
-        <div className="rounded-2xl border border-red-500/15 bg-red-500/5 p-4">
+        <div className="rounded-2xl border border-[#f4a261]/15 p-4" style={{ background: 'rgb(244 162 97 / 0.05)' }}>
           <div className="flex items-center gap-2 mb-3">
-            <Zap className="w-3.5 h-3.5 text-red-400" />
-            <span className="text-xs font-semibold text-red-400 uppercase tracking-wider">
+            <Zap className="w-3.5 h-3.5 text-[#f4a261]" />
+            <span className="text-xs font-semibold text-[#f4a261] uppercase tracking-wider">
               {urgent.length} pedido{urgent.length > 1 ? 's' : ''} urgente{urgent.length > 1 ? 's' : ''}
             </span>
           </div>
@@ -120,7 +131,11 @@ export default async function DashboardPage() {
             Pedidos Recentes
           </h2>
           <Link href="/dashboard/pedidos"
-            className="text-xs text-blue-400/70 hover:text-blue-400 transition-colors flex items-center gap-1">
+            className="text-xs flex items-center gap-1 transition-colors"
+            style={{ color: '#00b4d8', opacity: 0.6 }}
+            onMouseOver={e => (e.currentTarget.style.opacity = '1')}
+            onMouseOut={e => (e.currentTarget.style.opacity = '0.6')}
+          >
             Ver todos <ArrowUpRight className="w-3 h-3" />
           </Link>
         </div>
@@ -221,7 +236,7 @@ function EmptyOrders({ isAdmin }: { isAdmin: boolean }) {
       </p>
       {!isAdmin && (
         <Link href="/dashboard/novo-pedido">
-          <button className="h-8 px-4 rounded-lg text-xs font-semibold text-white bg-blue-600/80 hover:bg-blue-600 transition-colors">
+          <button className="h-8 px-4 rounded-lg text-xs font-semibold text-white transition-colors" style={{ background: 'linear-gradient(135deg, #0077b6, #00b4d8)' }}>
             + Criar Pedido
           </button>
         </Link>

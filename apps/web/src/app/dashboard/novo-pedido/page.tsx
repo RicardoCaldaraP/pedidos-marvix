@@ -185,7 +185,7 @@ export default function NewOrderPage() {
           </Link>
           <button type="submit" disabled={!isValid || submitting || uploading}
             className="flex-[2] h-10 rounded-xl text-sm font-semibold text-white transition-all disabled:opacity-40 hover:opacity-90"
-            style={{ background: 'linear-gradient(135deg, #1d4ed8, #2563eb)' }}
+            style={{ background: 'linear-gradient(135deg, #0077b6, #00b4d8)' }}
           >
             {submitting ? (
               <span className="flex items-center justify-center gap-2">

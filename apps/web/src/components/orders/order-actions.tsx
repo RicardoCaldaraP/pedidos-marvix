@@ -68,7 +68,7 @@ export function OrderActions({ order, isAdmin, currentUserId }: OrderActionsProp
           <button
             disabled={loading}
             onClick={() => changeStatus('completed', 'Prévia aprovada — pedido finalizado!')}
-            className={`${btnBase} bg-emerald-500/15 text-emerald-400 border border-emerald-500/25 hover:bg-emerald-500/25`}
+            className={`${btnBase} border`} style={{ background: 'rgb(6 214 160 / 0.12)', color: '#06d6a0', borderColor: 'rgb(6 214 160 / 0.25)' }}
           >
             <CheckCircle className="w-3.5 h-3.5" />
             Aprovar

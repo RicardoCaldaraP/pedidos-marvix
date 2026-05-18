@@ -17,7 +17,7 @@ export function OrderCard({ order }: OrderCardProps) {
         {/* Gradient accent top */}
         <div
           className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity"
-          style={{ background: `linear-gradient(90deg, transparent, ${statusCfg.color.replace('text-', '').includes('-') ? 'rgb(96 165 250)' : 'rgb(96 165 250)'}, transparent)` }}
+          style={{ background: 'linear-gradient(90deg, transparent, rgb(0 180 216 / 0.5), transparent)' }}
         />
 
         {/* Header */}

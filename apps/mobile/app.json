@@ -26,6 +26,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "bf15af7b-8134-4182-90d0-835ca26f81d2"
+      }
+    },
+    "owner": "ripii"
   }
 }
