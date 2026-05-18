@@ -150,9 +150,7 @@ export default async function DashboardPage() {
                 <Link key={status} href={`/dashboard/pedidos?status=${status}`}>
                   <div className="flex items-center justify-between p-3.5 rounded-xl border border-white/5 bg-white/2 hover:bg-white/4 hover:border-white/8 transition-all cursor-pointer group">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: cfg.color.replace('text-', '') === cfg.color ? '#60a5fa' : undefined, background: `color-mix(in srgb, currentColor 100%, transparent)` }}
-                        className={`w-1.5 h-1.5 rounded-full ${cfg.color.replace('text-', 'bg-')}`}
-                      />
+                      <div className={`w-1.5 h-1.5 rounded-full ${cfg.color.replace('text-', 'bg-')}`} />
                       <span className="text-xs text-white/50 group-hover:text-white/70 transition-colors">{cfg.label}</span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -181,9 +179,7 @@ function OrderRow({ order, index }: { order: Order; index: number }) {
         style={{ animationDelay: `${index * 0.04}s` }}
       >
         {/* Status bar */}
-        <div className="w-0.5 h-8 rounded-full shrink-0" style={{ backgroundColor: statusCfg.color.replace('text-', '') }}
-          className={`w-0.5 h-8 rounded-full shrink-0 ${statusCfg.color.replace('text-', 'bg-')}`}
-        />
+        <div className={`w-0.5 h-8 rounded-full shrink-0 ${statusCfg.color.replace('text-', 'bg-')}`} />
 
         {/* Info */}
         <div className="flex-1 min-w-0">
