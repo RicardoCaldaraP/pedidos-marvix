@@ -12,5 +12,12 @@
     "dev:mobile": "npm run start --workspace=apps/mobile",
     "build": "npm run build --workspace=apps/web",
     "lint": "npm run lint --workspace=apps/web"
+  },
+  "devDependencies": {
+    "react-native": "0.83.6"
+  },
+  "overrides": {
+    "react-native": "0.83.6",
+    "@react-native/virtualized-lists": "0.83.6"
   }
 }
